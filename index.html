@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -13,7 +15,6 @@
       --blue: #4dabf7;
       --green: #78c091;
       --purple: #9b8afb;
-      --red: #ef767a;
       --shadow: 6px 6px 0 var(--ink);
       --radius: 22px;
     }
@@ -25,11 +26,13 @@
     body {
       margin: 0;
       color: var(--ink);
-      font-family: "Trebuchet MS", Arial, sans-serif;
+      font-family: "Trebuchet MS", "Arial Rounded MT Bold", Arial, sans-serif;
       background:
-        radial-gradient(circle at 20px 20px,
-        rgba(32, 33, 43, .08) 2px,
-        transparent 3px) 0 0 / 36px 36px,
+        radial-gradient(
+          circle at 20px 20px,
+          rgba(32, 33, 43, 0.08) 2px,
+          transparent 3px
+        ) 0 0 / 36px 36px,
         #dff4f4;
       line-height: 1.5;
     }
@@ -59,15 +62,21 @@
       transform: rotate(12deg);
     }
 
-    h1, h2, h3 {
-      line-height: 1.1;
+    h1,
+    h2,
+    h3 {
       margin-top: 0;
+      line-height: 1.1;
     }
 
     h1 {
       max-width: 720px;
       font-size: clamp(2rem, 5vw, 4.2rem);
       margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
     }
 
     .subtitle {
@@ -93,6 +102,7 @@
 
     .avatar {
       min-width: 78px;
+      width: 78px;
       height: 78px;
       display: grid;
       place-items: center;
@@ -130,7 +140,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
 
     .badge {
@@ -168,7 +178,9 @@
       background: white;
       box-shadow: 4px 4px 0 var(--ink);
       text-align: left;
-      transition: transform .12s ease, box-shadow .12s ease;
+      transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease;
     }
 
     button:hover,
@@ -181,6 +193,10 @@
     button:active {
       transform: translate(3px, 3px);
       box-shadow: 1px 1px 0 var(--ink);
+    }
+
+    button:disabled {
+      cursor: default;
     }
 
     .start-button,
@@ -215,41 +231,23 @@
 
     .feedback.visible {
       display: block;
+      animation: pop 0.25s ease-out;
     }
 
-    .progress-wrap {
-      margin: 20px 0;
-    }
+    @keyframes pop {
+      from {
+        opacity: 0;
+        transform: scale(0.97);
+      }
 
-    .progress-label {
-      display: flex;
-      justify-content: space-between;
-      font-weight: bold;
-      margin-bottom: 7px;
-    }
-
-    .progress {
-      height: 18px;
-      border: 3px solid var(--ink);
-      border-radius: 999px;
-      background: white;
-      overflow: hidden;
-    }
-
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: var(--green);
-      transition: width .3s ease;
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     .final {
-      display: none;
       text-align: center;
-    }
-
-    .final.visible {
-      display: block;
     }
 
     .final-illustration {
@@ -266,7 +264,47 @@
       margin-top: 25px;
     }
 
-    @media (max-width: 600px) {
+    .profile-row {
+      display: grid;
+      grid-template-columns: minmax(190px, 1fr) 2fr 90px;
+      align-items: center;
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .profile-track {
+      height: 18px;
+      border: 3px solid var(--ink);
+      border-radius: 999px;
+      background: #eeeeee;
+      overflow: hidden;
+    }
+
+    .profile-fill {
+      height: 100%;
+      width: 5%;
+      background: var(--green);
+      transition: width 0.6s ease;
+    }
+
+    .profile-fill.pedagogical {
+      background: var(--blue);
+    }
+
+    .profile-fill.trust {
+      background: var(--purple);
+    }
+
+    .profile-message {
+      margin: 25px 0;
+      padding: 18px;
+      background: #fff4c2;
+      border: 3px dashed var(--ink);
+      border-radius: 16px;
+      font-weight: bold;
+    }
+
+    @media (max-width: 700px) {
       .character {
         align-items: flex-start;
       }
@@ -276,6 +314,11 @@
         width: 62px;
         height: 62px;
         font-size: 2.2rem;
+      }
+
+      .profile-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
       }
     }
   </style>
@@ -293,75 +336,166 @@
 
     <section class="game-card">
 
+      <!-- Startbildschirm -->
       <div id="startScreen">
         <div class="character">
           <div class="avatar">👨‍🏫</div>
+
           <div class="speech">
             <h2>Guten Morgen!</h2>
+
             <p>
               Du schlüpfst heute in die Rolle von Herrn Weber.
-              Dein Ziel: das iPad sinnvoll, sicher und passend zu deinem
-              Arbeitsalltag einzusetzen.
+              Dein Ziel ist es, digitale Werkzeuge sinnvoll, sicher
+              und passend zu seinem Arbeitsalltag einzusetzen.
+            </p>
+
+            <p>
+              Im Verlauf des Tages musst du Entscheidungen treffen.
+              Nicht immer gibt es eine eindeutig richtige Antwort.
+              Deine Entscheidungen beeinflussen drei Bereiche:
+              Zeitmanagement, pädagogische Qualität sowie Vertrauen
+              und Zusammenarbeit.
             </p>
           </div>
         </div>
 
-        <button class="start-button" id="startButton" type="button">
+        <button
+          class="start-button"
+          id="startButton"
+          type="button"
+        >
           ▶ Montag starten
         </button>
       </div>
 
+      <!-- Spielbereich -->
       <div id="gameScreen" hidden>
         <div class="meta">
-          <span class="badge" id="stationBadge">Station 1 von 10</span>
-          <span class="badge time" id="timeBadge">07:30 Uhr</span>
-        </div>
+          <span class="badge" id="stationBadge">
+            Station 1 von 10
+          </span>
 
-        <div class="progress-wrap">
-          <div class="progress-label">
-            <span>Fortschritt</span>
-            <span id="progressText">0 %</span>
-          </div>
-          <div class="progress">
-            <div class="progress-bar" id="progressBar"></div>
-          </div>
+          <span class="badge time" id="timeBadge">
+            07:30 Uhr
+          </span>
         </div>
 
         <h2 id="stationTitle"></h2>
+
         <p class="scenario" id="scenarioText"></p>
 
         <div class="choices" id="choices"></div>
 
         <div class="feedback" id="feedback">
           <h3>Deine Entscheidung</h3>
+
           <p id="feedbackText"></p>
-          <button class="next-button" id="nextButton" type="button">
+
+          <button
+            class="next-button"
+            id="nextButton"
+            type="button"
+          >
             Nächste Station →
           </button>
         </div>
       </div>
 
+      <!-- Schlussbildschirm -->
       <div class="final" id="finalScreen" hidden>
-        <div class="final-illustration">🎉📱☕</div>
-        <h2>Feierabend!</h2>
+        <div class="final-illustration">🌇📱☕</div>
+
+        <h2>Der Montag ist geschafft!</h2>
+
         <p>
-          Herr Weber blickt auf einen ereignisreichen Montag zurück.
-          Deine Entscheidungen zeigen, wie du digitale Werkzeuge als
-          Lehrerwerkzeug einsetzen würdest.
+          Herr Weber blickt auf einen ereignisreichen Tag zurück.
+          Es gab nicht immer nur eine richtige Entscheidung.
+          Entscheidend war, welche Folgen die jeweiligen Entscheidungen
+          hatten.
         </p>
 
         <div class="reflection">
-          <h3>Zum Weiterdenken</h3>
+          <h3>Dein persönliches Profil</h3>
+
+          <p>
+            Deine Entscheidungen zeigen, wie du digitale Werkzeuge
+            im Schulalltag einsetzen würdest.
+          </p>
+
+          <div class="profile-row">
+            <strong>Zeitmanagement</strong>
+
+            <div class="profile-track">
+              <div
+                class="profile-fill"
+                id="timeScoreBar"
+              ></div>
+            </div>
+
+            <span id="timeScoreText">0 Punkte</span>
+          </div>
+
+          <div class="profile-row">
+            <strong>Pädagogische Qualität</strong>
+
+            <div class="profile-track">
+              <div
+                class="profile-fill pedagogical"
+                id="pedagogyScoreBar"
+              ></div>
+            </div>
+
+            <span id="pedagogyScoreText">0 Punkte</span>
+          </div>
+
+          <div class="profile-row">
+            <strong>Vertrauen und Zusammenarbeit</strong>
+
+            <div class="profile-track">
+              <div
+                class="profile-fill trust"
+                id="trustScoreBar"
+              ></div>
+            </div>
+
+            <span id="trustScoreText">0 Punkte</span>
+          </div>
+
+          <div
+            class="profile-message"
+            id="profileMessage"
+          ></div>
+
+          <h3>Fragen zum Weiterdenken</h3>
+
           <ul>
-            <li>Wo hat das iPad Herrn Weber wirklich unterstützt?</li>
-            <li>Wann war eine analoge Lösung sinnvoller?</li>
-            <li>Welche Entscheidung würdest du beim nächsten Mal anders treffen?</li>
-            <li>Welche digitale Kompetenz möchtest du weiterentwickeln?</li>
+            <li>
+              Welche Entscheidung war für dich besonders schwierig?
+            </li>
+
+            <li>
+              Wo musste Herr Weber zwischen mehreren guten Möglichkeiten
+              abwägen?
+            </li>
+
+            <li>
+              Welche Entscheidung würdest du im echten Schulalltag
+              anders treffen?
+            </li>
+
+            <li>
+              Welche digitale Kompetenz möchtest du weiterentwickeln?
+            </li>
           </ul>
         </div>
 
-        <button class="restart-button" id="restartButton" type="button">
-          ↻ Spiel neu starten
+        <button
+          class="restart-button"
+          id="restartButton"
+          type="button"
+        >
+          ↻ Erneut spielen
         </button>
       </div>
 
@@ -373,171 +507,377 @@
       {
         title: "Ankommen in der Schule",
         time: "07:30 Uhr",
-        text: "Herr Weber kommt in der Schule an. Auf seinem iPad sieht er mehrere neue Nachrichten.",
+        text:
+          "Herr Weber kommt in der Schule an. Auf seinem iPad sieht er mehrere neue Nachrichten.",
         choices: [
           {
-            text: "Er liest alle Nachrichten sofort und beantwortet sie direkt.",
-            feedback: "Das kann hilfreich sein, kostet aber viel Zeit. Eine kurze Priorisierung wäre sinnvoll."
+            text:
+              "Er verschafft sich zunächst einen Überblick und beantwortet die dringendsten Nachrichten.",
+            feedback:
+              "Herr Weber gewinnt einen Überblick und kann Wichtiges zuerst bearbeiten.",
+            score: {
+              time: 2,
+              pedagogy: 1,
+              trust: 2
+            }
           },
           {
-            text: "Er prüft zunächst, welche Nachrichten dringend sind.",
-            feedback: "Eine gute Entscheidung. So behält Herr Weber den Überblick und kann Wichtiges zuerst bearbeiten."
+            text:
+              "Er beantwortet zuerst die Nachricht, die am einfachsten zu erledigen ist.",
+            feedback:
+              "Das schafft zwar schnell ein Erfolgserlebnis, entspricht aber nicht unbedingt den tatsächlichen Prioritäten.",
+            score: {
+              time: 1,
+              pedagogy: 0,
+              trust: 1
+            }
           },
           {
-            text: "Er ignoriert alle Nachrichten bis zum Feierabend.",
-            feedback: "Das schützt zwar seine Arbeitszeit, kann aber zu unnötigen Verzögerungen führen."
+            text:
+              "Er verschiebt alle Nachrichten auf den Nachmittag.",
+            feedback:
+              "Das schützt zunächst seine Vorbereitungszeit. Gleichzeitig könnten wichtige Absprachen unnötig warten.",
+            score: {
+              time: 1,
+              pedagogy: 1,
+              trust: -1
+            }
           }
         ]
       },
+
       {
         title: "Nachricht an eine Kollegin",
         time: "07:45 Uhr",
-        text: "Eine Kollegin fragt, ob Herr Weber die Unterrichtsmaterialien teilen kann.",
+        text:
+          "Eine Kollegin fragt, ob Herr Weber die Arbeitsblätter teilen kann.",
         choices: [
           {
-            text: "Er sendet die Dateien ungeprüft weiter.",
-            feedback: "Schnell, aber nicht ideal. Vor dem Teilen sollte Herr Weber Inhalte und Nutzungsrechte prüfen."
+            text:
+              "Er sendet die Arbeitsblätter sofort weiter.",
+            feedback:
+              "Die Kollegin freut sich über die schnelle Hilfe. Allerdings ist noch ungeklärt, ob die Materialien weitergegeben werden dürfen.",
+            score: {
+              time: 2,
+              pedagogy: -1,
+              trust: 2
+            }
           },
           {
-            text: "Er prüft die Materialien und teilt nur die passende Version.",
-            feedback: "Das ist professionell und verantwortungsvoll."
+            text:
+              "Er prüft kurz die Herkunft und teilt anschließend die geeignete Version.",
+            feedback:
+              "Das dauert etwas länger, verbindet aber kollegiale Unterstützung mit einem verantwortungsvollen Umgang mit Materialien.",
+            score: {
+              time: 1,
+              pedagogy: 2,
+              trust: 2
+            }
           },
           {
-            text: "Er fotografiert die Materialien mit seinem privaten Smartphone.",
-            feedback: "Das kann Datenschutz- und Sicherheitsprobleme verursachen."
+            text:
+              "Er erklärt, wo die Materialien zu finden sind, und schlägt eine gemeinsame Prüfung vor.",
+            feedback:
+              "Die Kollegin erhält Unterstützung und kann die Entscheidung nachvollziehen. Der gemeinsame Austausch kostet etwas Zeit.",
+            score: {
+              time: 0,
+              pedagogy: 2,
+              trust: 2
+            }
           }
         ]
       },
+
       {
         title: "Mathematik vorbereiten",
         time: "08:15 Uhr",
-        text: "Für den Mathematikunterricht möchte Herr Weber das iPad einsetzen.",
+        text:
+          "Für den Mathematikunterricht möchte Herr Weber das iPad einsetzen.",
         choices: [
           {
-            text: "Er wählt ein digitales Werkzeug passend zum Lernziel aus.",
-            feedback: "Sehr gut. Nicht das Gerät, sondern das Lernziel sollte die Auswahl bestimmen."
+            text:
+              "Er wählt eine App, die direkt zum geplanten Lernziel passt.",
+            feedback:
+              "Das digitale Werkzeug unterstützt den Unterricht, weil es an einem konkreten Lernziel ausgerichtet ist.",
+            score: {
+              time: 1,
+              pedagogy: 2,
+              trust: 1
+            }
           },
           {
-            text: "Er nutzt möglichst viele Apps gleichzeitig.",
-            feedback: "Viele Apps bedeuten nicht automatisch guten Unterricht."
+            text:
+              "Er entscheidet sich für eine besonders beeindruckende App mit vielen Funktionen.",
+            feedback:
+              "Die App kann motivierend sein. Gleichzeitig besteht die Gefahr, dass die Funktionen vom eigentlichen Lernziel ablenken.",
+            score: {
+              time: -1,
+              pedagogy: 0,
+              trust: 1
+            }
           },
           {
-            text: "Er verzichtet grundsätzlich auf analoge Materialien.",
-            feedback: "Eine Kombination aus digitalen und analogen Methoden kann sinnvoller sein."
+            text:
+              "Er plant eine kurze digitale Phase und ergänzt sie durch ein analoges Unterrichtsgespräch.",
+            feedback:
+              "Die Kombination ermöglicht unterschiedliche Zugänge und lässt Raum für Austausch.",
+            score: {
+              time: 0,
+              pedagogy: 2,
+              trust: 1
+            }
           }
         ]
       },
+
       {
         title: "Technische Störung",
         time: "09:00 Uhr",
-        text: "Das WLAN fällt plötzlich aus. Die geplante digitale Übung funktioniert nicht.",
+        text:
+          "Das WLAN fällt plötzlich aus. Die geplante digitale Übung funktioniert nicht.",
         choices: [
           {
-            text: "Er bricht den Unterricht sofort ab.",
-            feedback: "Eine technische Störung sollte nicht den gesamten Unterricht bestimmen."
+            text:
+              "Er wechselt zu seinem vorbereiteten analogen Plan B.",
+            feedback:
+              "Die Vorbereitung gibt ihm Sicherheit und hält den Unterricht in Gang.",
+            score: {
+              time: 2,
+              pedagogy: 2,
+              trust: 1
+            }
           },
           {
-            text: "Er nutzt seinen vorbereiteten analogen Plan B.",
-            feedback: "Eine sehr gute Vorbereitung. Ein Plan B gibt Sicherheit und erhält den Lernfluss."
+            text:
+              "Er lässt die Kinder zunächst gemeinsam überlegen, wie die Aufgabe ohne WLAN gelöst werden kann.",
+            feedback:
+              "Die Situation wird zum Lernanlass. Das braucht allerdings Zeit und eine flexible Unterrichtsführung.",
+            score: {
+              time: -1,
+              pedagogy: 2,
+              trust: 1
+            }
           },
           {
-            text: "Er lässt die Kinder warten, bis das WLAN wieder funktioniert.",
-            feedback: "Das führt zu unnötigen Wartezeiten."
+            text:
+              "Er versucht einige Minuten lang, das technische Problem selbst zu lösen.",
+            feedback:
+              "Eine kurze Fehlersuche ist nachvollziehbar. Wenn sie zu lange dauert, verliert die Lerngruppe jedoch Zeit.",
+            score: {
+              time: -1,
+              pedagogy: 0,
+              trust: 0
+            }
           }
         ]
       },
+
       {
         title: "Unterschiedliche Lernvoraussetzungen",
         time: "09:45 Uhr",
-        text: "Einige Kinder benötigen mehr Unterstützung, andere sind bereits fertig.",
+        text:
+          "Einige Kinder benötigen mehr Unterstützung, andere sind bereits fertig.",
         choices: [
           {
-            text: "Er bietet verschiedene Aufgaben und Hilfen an.",
-            feedback: "Das unterstützt Differenzierung und Teilhabe."
+            text:
+              "Er bietet zusätzliche Hilfen und weiterführende Aufgaben an.",
+            feedback:
+              "So können unterschiedliche Lernvoraussetzungen berücksichtigt werden.",
+            score: {
+              time: 0,
+              pedagogy: 2,
+              trust: 2
+            }
           },
           {
-            text: "Alle Kinder erhalten genau dieselbe Aufgabe.",
-            feedback: "Gleichbehandlung führt nicht immer zu gleichen Lernchancen."
+            text:
+              "Er arbeitet zunächst mit einer kleinen Gruppe weiter und lässt die übrigen Kinder selbstständig üben.",
+            feedback:
+              "Das kann gut funktionieren, wenn die selbstständige Arbeitsphase klar vorbereitet ist.",
+            score: {
+              time: 1,
+              pedagogy: 2,
+              trust: 1
+            }
           },
           {
-            text: "Die schnellen Kinder sollen einfach warten.",
-            feedback: "Besser wären weiterführende oder vertiefende Aufgaben."
+            text:
+              "Er beendet die Aufgabe für alle gemeinsam und verschiebt die Differenzierung.",
+            feedback:
+              "Das spart kurzfristig Zeit. Einige Kinder erhalten dadurch aber möglicherweise zu wenig Unterstützung oder Herausforderung.",
+            score: {
+              time: 2,
+              pedagogy: -1,
+              trust: 0
+            }
           }
         ]
       },
+
       {
         title: "Rückmeldungen auswerten",
         time: "10:30 Uhr",
-        text: "Eine digitale Lernanwendung zeigt unterschiedliche Ergebnisse der Kinder an.",
+        text:
+          "Eine digitale Lernanwendung zeigt unterschiedliche Ergebnisse der Kinder an.",
         choices: [
           {
-            text: "Er übernimmt die Ergebnisse ungeprüft.",
-            feedback: "Digitale Auswertungen sind hilfreich, ersetzen aber nicht die pädagogische Einschätzung."
+            text:
+              "Er nutzt die Ergebnisse als Ausgangspunkt für ein Gespräch mit den Kindern.",
+            feedback:
+              "Die Daten werden nicht isoliert betrachtet, sondern pädagogisch eingeordnet.",
+            score: {
+              time: 0,
+              pedagogy: 2,
+              trust: 2
+            }
           },
           {
-            text: "Er betrachtet die Ergebnisse als einen Hinweis unter mehreren.",
-            feedback: "Genau: Daten können unterstützen, müssen aber kritisch eingeordnet werden."
+            text:
+              "Er übernimmt die Ergebnisse als wichtige Orientierung für die weitere Planung.",
+            feedback:
+              "Das kann hilfreich sein, solange die Ergebnisse nicht als vollständiges Bild der Kinder missverstanden werden.",
+            score: {
+              time: 1,
+              pedagogy: 1,
+              trust: 1
+            }
           },
           {
-            text: "Er ignoriert alle Ergebnisse.",
-            feedback: "Damit würde er eine hilfreiche Informationsquelle verschenken."
+            text:
+              "Er vergleicht die Ergebnisse öffentlich, damit die Kinder ihre Leistungen einordnen können.",
+            feedback:
+              "Transparenz kann motivieren. Öffentliche Vergleiche können jedoch Vertrauen und Lernklima beeinträchtigen.",
+            score: {
+              time: 1,
+              pedagogy: -1,
+              trust: -2
+            }
           }
         ]
       },
+
       {
         title: "Zusammenarbeit im Kollegium",
         time: "11:15 Uhr",
-        text: "Das Kollegium möchte gemeinsam an einer Unterrichtsplanung arbeiten.",
+        text:
+          "Das Kollegium möchte gemeinsam an einer Unterrichtsplanung arbeiten.",
         choices: [
           {
-            text: "Er beteiligt sich und dokumentiert seine Änderungen nachvollziehbar.",
-            feedback: "Das erleichtert Zusammenarbeit und schafft Transparenz."
+            text:
+              "Er ergänzt eigene Ideen und kennzeichnet seine Änderungen.",
+            feedback:
+              "Das macht den gemeinsamen Arbeitsprozess transparent.",
+            score: {
+              time: 1,
+              pedagogy: 2,
+              trust: 2
+            }
           },
           {
-            text: "Er löscht die Beiträge der anderen Personen.",
-            feedback: "Gemeinsames Arbeiten braucht Absprachen und Respekt vor den Beiträgen anderer."
+            text:
+              "Er wartet zunächst ab und gibt anschließend ausführliches Feedback.",
+            feedback:
+              "Das kann die Qualität der Planung verbessern, führt aber zu einem etwas langsameren Prozess.",
+            score: {
+              time: -1,
+              pedagogy: 2,
+              trust: 2
+            }
           },
           {
-            text: "Er arbeitet völlig allein weiter.",
-            feedback: "Das verschenkt Möglichkeiten der Kooperation."
+            text:
+              "Er erstellt parallel eine eigene Version der Planung.",
+            feedback:
+              "So behält er seine Vorstellungen im Blick. Gleichzeitig wird die gemeinsame Arbeit erschwert.",
+            score: {
+              time: 0,
+              pedagogy: 1,
+              trust: -1
+            }
           }
         ]
       },
+
       {
         title: "Nachricht eines Elternteils",
         time: "13:30 Uhr",
-        text: "Ein Elternteil schreibt eine dringende Nachricht über einen privaten Messenger.",
+        text:
+          "Ein Elternteil schreibt eine dringende Nachricht über einen privaten Messenger.",
         choices: [
           {
-            text: "Er antwortet sofort ausführlich über den privaten Messenger.",
-            feedback: "Das kann unprofessionell und datenschutzrechtlich problematisch sein."
+            text:
+              "Er antwortet kurz und verweist anschließend auf den schulischen Kommunikationsweg.",
+            feedback:
+              "Herr Weber reagiert zugewandt, achtet aber weiterhin auf professionelle und datenschutzgerechte Kommunikation.",
+            score: {
+              time: 1,
+              pedagogy: 1,
+              trust: 2
+            }
           },
           {
-            text: "Er verweist freundlich auf den vereinbarten schulischen Kommunikationsweg.",
-            feedback: "Das wahrt professionelle Grenzen und schützt persönliche Daten."
+            text:
+              "Er beantwortet die Nachricht vollständig über den privaten Messenger.",
+            feedback:
+              "Das ist für das Elternteil bequem und unmittelbar. Private und schulische Kommunikation werden jedoch vermischt.",
+            score: {
+              time: 2,
+              pedagogy: -1,
+              trust: 1
+            }
           },
           {
-            text: "Er veröffentlicht die Nachricht im Klassenchat.",
-            feedback: "Private Kommunikation darf nicht ohne Zustimmung weitergegeben werden."
+            text:
+              "Er wartet bis zum nächsten Schultag und antwortet ausschließlich über den vereinbarten Weg.",
+            feedback:
+              "Das wahrt klare Grenzen. Bei wirklich dringenden Anliegen kann die lange Wartezeit jedoch unbefriedigend sein.",
+            score: {
+              time: 0,
+              pedagogy: 2,
+              trust: 0
+            }
           }
         ]
       },
+
       {
         title: "Tagesreflexion",
         time: "15:30 Uhr",
-        text: "Am Ende des Tages fragt sich Herr Weber, was gut funktioniert hat.",
+        text:
+          "Am Ende des Tages fragt sich Herr Weber, was gut funktioniert hat.",
         choices: [
           {
-            text: "Er reflektiert kurz Chancen und Grenzen des iPads.",
-            feedback: "Eine bewusste Reflexion hilft, digitale Werkzeuge gezielt weiterzuentwickeln."
+            text:
+              "Er notiert kurz, welche digitalen Werkzeuge hilfreich waren und wo Probleme entstanden.",
+            feedback:
+              "Eine kurze Dokumentation erleichtert die Weiterentwicklung seines digitalen Handelns.",
+            score: {
+              time: 1,
+              pedagogy: 2,
+              trust: 1
+            }
           },
           {
-            text: "Er bewertet den Tag nur danach, ob die Technik funktioniert hat.",
-            feedback: "Entscheidend sind vor allem Lernprozesse und pädagogische Ziele."
+            text:
+              "Er spricht mit einer Kollegin über eine besonders gelungene Unterrichtssituation.",
+            feedback:
+              "Der Austausch erweitert seine Perspektive und stärkt die Zusammenarbeit.",
+            score: {
+              time: 0,
+              pedagogy: 2,
+              trust: 2
+            }
           },
           {
-            text: "Er verändert alles, ohne seine Erfahrungen auszuwerten.",
-            feedback: "Veränderungen sind sinnvoller, wenn sie auf einer Reflexion beruhen."
+            text:
+              "Er beendet den Arbeitstag ohne weitere Reflexion, weil er sehr erschöpft ist.",
+            feedback:
+              "Das ist angesichts eines langen Tages verständlich. Eine Reflexion kann dadurch aber verloren gehen.",
+            score: {
+              time: 2,
+              pedagogy: 0,
+              trust: 0
+            }
           }
         ]
       }
@@ -546,86 +886,148 @@
     let currentStation = 0;
     let selected = false;
 
-    const startScreen = document.getElementById("startScreen");
-    const gameScreen = document.getElementById("gameScreen");
-    const finalScreen = document.getElementById("finalScreen");
+    let scores = {
+      time: 0,
+      pedagogy: 0,
+      trust: 0
+    };
 
-    const startButton = document.getElementById("startButton");
-    const nextButton = document.getElementById("nextButton");
-    const restartButton = document.getElementById("restartButton");
+    const startScreen =
+      document.getElementById("startScreen");
 
-    const stationBadge = document.getElementById("stationBadge");
-    const timeBadge = document.getElementById("timeBadge");
-    const progressText = document.getElementById("progressText");
-    const progressBar = document.getElementById("progressBar");
-    const stationTitle = document.getElementById("stationTitle");
-    const scenarioText = document.getElementById("scenarioText");
-    const choices = document.getElementById("choices");
-    const feedback = document.getElementById("feedback");
-    const feedbackText = document.getElementById("feedbackText");
+    const gameScreen =
+      document.getElementById("gameScreen");
+
+    const finalScreen =
+      document.getElementById("finalScreen");
+
+    const startButton =
+      document.getElementById("startButton");
+
+    const nextButton =
+      document.getElementById("nextButton");
+
+    const restartButton =
+      document.getElementById("restartButton");
+
+    const stationBadge =
+      document.getElementById("stationBadge");
+
+    const timeBadge =
+      document.getElementById("timeBadge");
+
+    const stationTitle =
+      document.getElementById("stationTitle");
+
+    const scenarioText =
+      document.getElementById("scenarioText");
+
+    const choices =
+      document.getElementById("choices");
+
+    const feedback =
+      document.getElementById("feedback");
+
+    const feedbackText =
+      document.getElementById("feedbackText");
 
     function startGame() {
       currentStation = 0;
+
+      scores = {
+        time: 0,
+        pedagogy: 0,
+        trust: 0
+      };
+
       startScreen.hidden = true;
       finalScreen.hidden = true;
       gameScreen.hidden = false;
+
       showStation();
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
     }
 
     function showStation() {
       const station = stations[currentStation];
+
       selected = false;
 
       stationBadge.textContent =
-        "Station " + (currentStation + 1) + " von " + stations.length;
+        "Station " +
+        (currentStation + 1) +
+        " von " +
+        stations.length;
 
       timeBadge.textContent = station.time;
       stationTitle.textContent = station.title;
       scenarioText.textContent = station.text;
 
-      const percent = Math.round(
-        (currentStation / stations.length) * 100
-      );
-
-      progressText.textContent = percent + " %";
-      progressBar.style.width = percent + "%";
-
       choices.innerHTML = "";
       feedback.classList.remove("visible");
       feedbackText.textContent = "";
 
-      station.choices.forEach((choice, index) => {
+      station.choices.forEach(function(choice, index) {
         const button = document.createElement("button");
+
         button.type = "button";
+
         button.innerHTML =
           '<span class="choice-number">' +
           (index + 1) +
           "</span>" +
           choice.text;
 
-        button.addEventListener("click", function () {
-          chooseAnswer(choice.feedback, button);
+        button.addEventListener("click", function() {
+          chooseAnswer(choice, button);
         });
 
         choices.appendChild(button);
       });
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
     }
 
-    function chooseAnswer(text, clickedButton) {
-      if (selected) return;
+    function chooseAnswer(choice, clickedButton) {
+      if (selected) {
+        return;
+      }
 
       selected = true;
-      feedbackText.textContent = text;
+
+      scores.time += choice.score.time;
+      scores.pedagogy += choice.score.pedagogy;
+      scores.trust += choice.score.trust;
+
+      feedbackText.textContent = choice.feedback;
       feedback.classList.add("visible");
 
-      const allButtons = choices.querySelectorAll("button");
-      allButtons.forEach(button => {
+      const allButtons =
+        choices.querySelectorAll("button");
+
+      allButtons.forEach(function(button) {
         button.disabled = true;
-        button.style.opacity = "0.65";
+        button.style.opacity = "0.6";
       });
 
+      clickedButton.disabled = true;
       clickedButton.style.opacity = "1";
       clickedButton.style.background = "#e9f7e9";
+
+      if (currentStation === stations.length - 1) {
+        nextButton.textContent =
+          "Zum persönlichen Profil →";
+      } else {
+        nextButton.textContent =
+          "Nächste Station →";
+      }
 
       feedback.scrollIntoView({
         behavior: "smooth",
@@ -634,30 +1036,133 @@
     }
 
     function nextStation() {
-      if (!selected) return;
+      if (!selected) {
+        return;
+      }
 
       currentStation++;
 
       if (currentStation >= stations.length) {
-        gameScreen.hidden = true;
-        finalScreen.hidden = false;
-        progressBar.style.width = "100%";
-        progressText.textContent = "100 %";
+        showFinalScreen();
       } else {
         showStation();
       }
     }
 
-    function restartGame() {
-      finalScreen.hidden = true;
-      startScreen.hidden = false;
+    function showFinalScreen() {
       gameScreen.hidden = true;
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      finalScreen.hidden = false;
+
+      updateProfile();
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
     }
 
-    startButton.addEventListener("click", startGame);
-    nextButton.addEventListener("click", nextStation);
-    restartButton.addEventListener("click", restartGame);
+    function updateProfile() {
+      const maxScore = stations.length * 2;
+
+      updateScore(
+        scores.time,
+        maxScore,
+        "timeScoreBar",
+        "timeScoreText"
+      );
+
+      updateScore(
+        scores.pedagogy,
+        maxScore,
+        "pedagogyScoreBar",
+        "pedagogyScoreText"
+      );
+
+      updateScore(
+        scores.trust,
+        maxScore,
+        "trustScoreBar",
+        "trustScoreText"
+      );
+
+      const average =
+        (
+          scores.time +
+          scores.pedagogy +
+          scores.trust
+        ) / 3;
+
+      const profileMessage =
+        document.getElementById("profileMessage");
+
+      if (average >= 10) {
+        profileMessage.textContent =
+          "Dein Profil zeigt eine sehr ausgewogene Haltung: " +
+          "Du verbindest effizientes Handeln mit pädagogischer " +
+          "Sorgfalt und einem guten Blick für Zusammenarbeit.";
+      } else if (average >= 5) {
+        profileMessage.textContent =
+          "Dein Profil zeigt mehrere Stärken. Besonders interessant " +
+          "sind die Situationen, in denen du zwischen Zeit, Qualität " +
+          "und Vertrauen abwägen musstest.";
+      } else {
+        profileMessage.textContent =
+          "Deine Entscheidungen zeigen, dass digitale Situationen " +
+          "oft Zielkonflikte enthalten. Überlege, welche Folgen " +
+          "deine Entscheidungen für Lernende und Kolleginnen und " +
+          "Kollegen haben könnten.";
+      }
+    }
+
+    function updateScore(score, maxScore, barId, textId) {
+      const bar =
+        document.getElementById(barId);
+
+      const text =
+        document.getElementById(textId);
+
+      const minimum = -8;
+      const maximum = maxScore;
+
+      const percentage =
+        ((score - minimum) / (maximum - minimum)) * 100;
+
+      const boundedPercentage =
+        Math.max(5, Math.min(100, percentage));
+
+      bar.style.width =
+        boundedPercentage + "%";
+
+      text.textContent =
+        score + " Punkte";
+    }
+
+    function restartGame() {
+      finalScreen.hidden = true;
+      gameScreen.hidden = true;
+      startScreen.hidden = false;
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+
+    startButton.addEventListener(
+      "click",
+      startGame
+    );
+
+    nextButton.addEventListener(
+      "click",
+      nextStation
+    );
+
+    restartButton.addEventListener(
+      "click",
+      restartGame
+    );
   </script>
 </body>
 </html>
+
